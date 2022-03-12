@@ -1,0 +1,55 @@
+.conjunto{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.tarjetas{
+  
+    border: 1px solid rgb(189, 189, 189);
+    min-height: 150px;
+    min-width: 150px;
+    margin: 5px;
+    max-width: 10%;
+    font-weight: bold;
+    
+   
+}
+
+h3{
+    margin-left: 5%;
+}
+
+.best{
+    background-color: black;
+    border-radius: 5px;
+    /*min-height: 20px;*/
+    display: flex;
+    justify-content: center;
+
+}
+
+#best{
+    color: white;
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.more{
+    border: 2px solid black;
+    padding: 1px;
+}
+
+
+.amazon{
+    border: 2px solid black;
+    padding: 1px;
+    font-size: 15px;
+    background-color:orange;
+}
+
+.foto{
+    max-width: 200px;
+    max-height: 200px;
+}
