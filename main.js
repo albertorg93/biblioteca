@@ -77,7 +77,7 @@ buscarSecciones()
 
         buscarBestSellers()
         .then(async (data)=> {
-                
+                  console.log("hola");
                   cuerpo.innerHTML = "";
                   const back = document.createElement("button");
                   const todas = document.createElement('section');
