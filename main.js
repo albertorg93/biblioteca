@@ -1,4 +1,5 @@
 let direccion = "";
+let cuerpo = document.getElementById("indexbody");
 
 function backToIndex(){
         window.location = "/index.html"
@@ -20,7 +21,7 @@ buscarSecciones()
 .then(data=> {
         const todas = document.createElement('section');
         let categoria = "";
-       
+         cuerpo.innerHTML = "";
     for(let i=0;i<data.length;i++){
         const div = document.createElement('div');
         const e = document.createElement('p');
@@ -60,7 +61,9 @@ buscarSecciones()
 
 
 
-  function iraBests(){
+     function iraBests(){
+      
+
        async function buscarBestSellers() {
             try {
                 let response = await fetch(direccion);
@@ -71,11 +74,14 @@ buscarSecciones()
                 console.log(`ERROR: ${error.stack}`);
                           }
              }
+
         buscarBestSellers()
-        .then(data=> {
-              
-                 const todas = document.createElement('section');
-                 for(let i=0;i<data.length;i++){
+        .then(async (data)=> {
+                
+                  cuerpo.innerHTML = "";
+                  const back = document.createElement("button");
+                  const todas = document.createElement('section');
+                  for(let i=0;i<data.length;i++){
                    const div = document.createElement('div');
                    const img = document.createElement('img');
                    const e = document.createElement('p');
@@ -85,7 +91,13 @@ buscarSecciones()
                    div.classList.add("tarjetas");
                    img.classList.add("foto");
                    todas.classList.add('conjunto')
+                   back.classList.add('volver')
                    button2.classList.add('amazon')
+                   back.type = "onclick";
+                   back.onclick = function volverAtras(){
+                    //window.location="/index.html"
+                       goToCategories()
+                   }
                    button2.type = "onclick";
                    button2.onclick = function iragoogle (){
                     alert("Button is clicked");
@@ -95,7 +107,9 @@ buscarSecciones()
                    img.src = data[i].book_image
                    par1.innerHTML = `Weeks on list: ${i}`
                    par2.innerHTML = data[i].description
+                   back.innerHTML = "Back to categories"
                    button2.innerHTML = `BUY AT AMAZON >`
+                   document.body.appendChild(back)
                    document.body.appendChild(todas)
                    todas.appendChild(div)
                    div.appendChild(e);
@@ -105,6 +119,9 @@ buscarSecciones()
                    div.appendChild(button2);
                 }
             })
+            
+      
+      
         }
          
         
