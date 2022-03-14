@@ -9,16 +9,24 @@
 </head>
 <body id="indexbody">
     
-   <h3>New York Times &reg;</h3>
+   <h3 id="nytimes">New York Times &reg;</h3>
    <div class="best">
       <h1 id="best">Best Sellers</h1>
    </div>
 
+   <div id="botones">
     <button id="comenzar" onclick="goToCategories()">Go to categories</button>
-    
+    <button id="botonLogin" onclick="loginWithGoogle()" class="display">Sign in</button>
+    </div> 
+
+    <footer>Welcome to the Books API of New York Times &reg;</footer>
  
 
-
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="./main.js"></script>
 </body>
 </html>
