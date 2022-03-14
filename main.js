@@ -1,9 +1,49 @@
+// Your web app's Firebase configuration
+let firebaseConfig = {
+    apiKey: "AIzaSyDz1tQjEXFCDEWnRm9J8MzHtzXkNPhjyfU",
+    authDomain: "quiz2-ce40f.firebaseapp.com",
+    projectId: "quiz2-ce40f",
+    storageBucket: "quiz2-ce40f.appspot.com",
+    messagingSenderId: "466936444764",
+    appId: "1:466936444764:web:2e5376aa50a5d2d47fb399",
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  //inciar sesion con google
+  const loginWithGoogle = function () {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        /** @type {firebase.auth.OAuthCredential} */
+        const user = result.user.displayName;
+        localStorage.setItem("usuario", user);
+        console.log("login con google de ", user);
+        goToCategories();
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        console.log(errorMessage);
+      });
+  };
+
+
+
+
 let direccion = "";
 let cuerpo = document.getElementById("indexbody");
 
+//funcion para volver a la página principal
 function backToIndex(){
         window.location = "/index.html"
     }
+
 
 //funcion para buscar las categorias de libros
 function goToCategories(){
@@ -22,7 +62,14 @@ buscarSecciones()
         const todas = document.createElement('section');
         let categoria = "";
          cuerpo.innerHTML = "";
-    for(let i=0;i<data.length;i++){
+         
+       for(let i=0;i<data.length;i++){
+      // if(localStorage.getItem("usuario")){
+      //   const fav = document.createElement('p');
+      //   console.log(fav) 
+      // }
+        
+       
         const div = document.createElement('div');
         const e = document.createElement('p');
         const par1 = document.createElement("p");
@@ -30,6 +77,7 @@ buscarSecciones()
         const par3 = document.createElement("p");
         const button = document.createElement("button");
         div.classList.add("tarjetas");
+       // fav.classList.add("favoritos");
         todas.classList.add('conjunto')
         button.classList.add('more')
         button.setAttribute('id',`${data[i].display_name}`)
@@ -41,10 +89,11 @@ buscarSecciones()
             };
         
         e.innerHTML = data[i].display_name
-        par1.innerHTML = data[i].oldest_published_date
-        par2.innerHTML = data[i].newest_published_date
-        par3.innerHTML = data[i].updated
+        par1.innerHTML = `Oldest: ${data[i].oldest_published_date}`
+        par2.innerHTML = `Newest: ${data[i].newest_published_date}`
+        par3.innerHTML =  `Updated: ${data[i].updated}` 
         button.innerHTML = `READ MORE! >`
+       // fav.innerHTML = `Favorito`
         document.body.appendChild(todas)
         todas.appendChild(div)
         div.appendChild(e);
@@ -52,6 +101,7 @@ buscarSecciones()
         div.appendChild(par2);
         div.appendChild(par3);
         div.appendChild(button);
+       // div.appendChild(fav);
 
     }   
     
@@ -60,10 +110,8 @@ buscarSecciones()
 }
 
 
-
+     //funcion para buscar los best sellers
      function iraBests(){
-      
-
        async function buscarBestSellers() {
             try {
                 let response = await fetch(direccion);
@@ -77,7 +125,7 @@ buscarSecciones()
 
         buscarBestSellers()
         .then(async (data)=> {
-                
+                  console.log("hola");
                   cuerpo.innerHTML = "";
                   const back = document.createElement("button");
                   const todas = document.createElement('section');
@@ -90,6 +138,7 @@ buscarSecciones()
                    const button2 = document.createElement("button");
                    div.classList.add("tarjetas");
                    img.classList.add("foto");
+                   e.classList.add("ranking");
                    todas.classList.add('conjunto')
                    back.classList.add('volver')
                    button2.classList.add('amazon')
@@ -100,14 +149,13 @@ buscarSecciones()
                    }
                    button2.type = "onclick";
                    button2.onclick = function iragoogle (){
-                    alert("Button is clicked");
+                      window.location.href = data[i].amazon_product_url
                   };
-                
-                   e.innerHTML = data[i].title
+                   e.innerHTML = `# ${data[i].rank} ${data[i].title}`
                    img.src = data[i].book_image
                    par1.innerHTML = `Weeks on list: ${i}`
                    par2.innerHTML = data[i].description
-                   back.innerHTML = "Back to categories"
+                   back.innerHTML = "< BACK TO INDEX"
                    button2.innerHTML = `BUY AT AMAZON >`
                    document.body.appendChild(back)
                    document.body.appendChild(todas)
