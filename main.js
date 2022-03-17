@@ -125,8 +125,9 @@ buscarSecciones()
 
         buscarBestSellers()
         .then(async (data)=> {
-                  console.log("hola");
+                 
                   cuerpo.innerHTML = "";
+                 
                   const back = document.createElement("button");
                   const todas = document.createElement('section');
                   for(let i=0;i<data.length;i++){
@@ -136,7 +137,7 @@ buscarSecciones()
                    const par1 = document.createElement("p");
                    const par2 = document.createElement("p");
                    const button2 = document.createElement("button");
-                   div.classList.add("tarjetas");
+                   div.classList.add("tarjetas2");
                    img.classList.add("foto");
                    e.classList.add("ranking");
                    todas.classList.add('conjunto')
@@ -157,6 +158,7 @@ buscarSecciones()
                    par2.innerHTML = data[i].description
                    back.innerHTML = "< BACK TO INDEX"
                    button2.innerHTML = `BUY AT AMAZON >`
+                   
                    document.body.appendChild(back)
                    document.body.appendChild(todas)
                    todas.appendChild(div)
@@ -165,6 +167,13 @@ buscarSecciones()
                    div.appendChild(par1);
                    div.appendChild(par2);
                    div.appendChild(button2);
+                   if(localStorage.getItem("usuario")){
+                    const fav = document.createElement("button");
+                    fav.innerHTML = "Add to favorite"
+                    div.appendChild(fav);
+                    console.log("sjdskscnkscnskdj")
+                  }
+                
                 }
             })
             
