@@ -1,15 +1,22 @@
 // Your web app's Firebase configuration
 let firebaseConfig = {
-    apiKey: "AIzaSyDz1tQjEXFCDEWnRm9J8MzHtzXkNPhjyfU",
-    authDomain: "quiz2-ce40f.firebaseapp.com",
-    projectId: "quiz2-ce40f",
-    storageBucket: "quiz2-ce40f.appspot.com",
-    messagingSenderId: "466936444764",
-    appId: "1:466936444764:web:2e5376aa50a5d2d47fb399",
+  apiKey: "AIzaSyCEiQ3_lwGBQfOxSOyczwP0q-lbUj-Lpzk",
+  authDomain: "pruebaweb-457eb.firebaseapp.com",
+  projectId: "pruebaweb-457eb",
+  storageBucket: "pruebaweb-457eb.appspot.com",
+  messagingSenderId: "289508600231",
+  appId: "1:289508600231:web:a23a0274100946acdf2e82"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+
+  //limpiar el localstorage
+  localStorage.clear();
+
+  //incializo variable global
+  let libro = "";
+  let libro1 = "";
 
   //inciar sesion con google
   const loginWithGoogle = function () {
@@ -44,6 +51,30 @@ function backToIndex(){
         window.location = "/index.html"
     }
 
+//funcion para añadir favoritos
+function addFavs(){
+  async function guardarFavs(){
+    db.collection("favoritos")
+  .add({
+    titulo: libro
+  })
+  .then((docRef) => {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error adding document: ", error);
+  });
+  }
+guardarFavs()
+}
+
+//funcion para ver la pagina de favoritos
+// function goToFavs(){
+//   async function viewFavs(){
+//     cuerpo.innerHTML = "";
+
+//   }
+// }
 
 //funcion para buscar las categorias de libros
 function goToCategories(){
@@ -60,15 +91,18 @@ async function buscarSecciones() {
 buscarSecciones()
 .then(data=> {
         const todas = document.createElement('section');
+        const favorites = document.createElement("button");
+        favorites.classList.add('favoritos')
+        favorites.innerHTML = `View favorites`
         let categoria = "";
-         cuerpo.innerHTML = "";
-         
+        cuerpo.innerHTML = "";
+        if(localStorage.getItem("usuario")){
+        document.body.appendChild(favorites)
+        // favorites.onclick = async function goToFavs(){
+        //   viewFavs();
+        // }
+        }
        for(let i=0;i<data.length;i++){
-      // if(localStorage.getItem("usuario")){
-      //   const fav = document.createElement('p');
-      //   console.log(fav) 
-      // }
-        
        
         const div = document.createElement('div');
         const e = document.createElement('p');
@@ -77,7 +111,6 @@ buscarSecciones()
         const par3 = document.createElement("p");
         const button = document.createElement("button");
         div.classList.add("tarjetas");
-       // fav.classList.add("favoritos");
         todas.classList.add('conjunto')
         button.classList.add('more')
         button.setAttribute('id',`${data[i].display_name}`)
@@ -170,8 +203,13 @@ buscarSecciones()
                    if(localStorage.getItem("usuario")){
                     const fav = document.createElement("button");
                     fav.innerHTML = "Add to favorite"
+                    fav.type = "onclick";
+                    fav.onclick = async function gotofavs() {
+                      libro = data[i].title
+                      addFavs()
+                    }
                     div.appendChild(fav);
-                    console.log("sjdskscnkscnskdj")
+                    
                   }
                 
                 }
@@ -183,4 +221,4 @@ buscarSecciones()
          
         
         
-        
+  
