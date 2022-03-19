@@ -1,9 +1,22 @@
 *{
-    margin: 0 auto;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    height: 100vh;
+    width: 100vw;
 }
 
 body{
-    background-color: rgb(238, 235, 235)
+    background-color: rgb(214, 214, 214);
+    height: 100vh;
+    width: 100vw;
+    
+}
+
+main{
+    margin-top: 40vh;
 }
 
 #nytimes{
@@ -13,13 +26,14 @@ body{
 }
 
 .conjunto{
+
     display: flex;
     flex-wrap: wrap;
 
 }
 
 #botones{
-    margin-top: 60%;
+     
     display: flex;
     flex-direction: column;
     min-width: 300px;
@@ -37,9 +51,16 @@ body{
     font-size: 14px;
 }
 
+.favoritos{
+    margin-top: 10px;
+    text-align: center;
+}
+
 .tarjetas{
   
-    border: 1px solid rgb(189, 189, 189);
+    border: 1px solid rgb(14, 13, 13);
+    background-color: rgb(208, 255, 239);
+    border-radius: 3px;
     min-height: 150px;
     min-width: 170px;
     margin: 5px;
@@ -47,7 +68,7 @@ body{
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
-    text-align: left;
+    text-align: center;
 }
 
  .tarjetas p{
@@ -60,7 +81,8 @@ body{
 
 .tarjetas2{
   
-    border: 1px solid rgb(189, 189, 189);
+    border: 1px solid rgb(143, 143, 143);
+    background-color: rgb(255, 223, 211);
     min-height: 150px;
     min-width: 170px;
     margin: 5px;
@@ -70,7 +92,6 @@ body{
     font-size: 12px;
     text-align: left;
 }
-
 
 
 
@@ -128,6 +149,20 @@ body{
 }
 
 footer{
-    margin-top: 50%;
     text-align: center;
+    bottom: 0;
+    position: fixed;
+    margin-bottom: 10px;
+    display: flex;
 }
+
+
+/* añadimos media queries */
+@media only screen and (min-width: 961px) {
+    /*
+    *{
+      background-color: rgb(39, 170, 214);
+      max-height: 100px;
+    }
+    */
+  }
