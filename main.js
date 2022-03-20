@@ -16,6 +16,8 @@ let firebaseConfig = {
 
   //Variables globales
   let libro = "";
+  const headerBooks = document.getElementById("headerbooks")
+  const footerBooks = document.getElementById("footerbooks")
 
 
   //inciar sesion con google
@@ -69,6 +71,7 @@ guardarFavs()
    function viewFavs(){
   async function verFavs(){
     cuerpo.innerHTML = "";
+    document.body.appendChild(headerBooks)
     let librosFavoritos = []
   db.collection("favoritos")
     .get()
@@ -130,6 +133,7 @@ buscarSecciones()
         favorites.innerHTML = `View favorites`
         let categoria = "";
         cuerpo.innerHTML = "";
+        document.body.appendChild(headerBooks)
         if(localStorage.getItem("usuario")){
         document.body.appendChild(favorites)
          favorites.onclick = async function goToFavs(){
@@ -167,8 +171,8 @@ buscarSecciones()
         div.appendChild(par2);
         div.appendChild(par3);
         div.appendChild(button);
-
     }   
+        
     
 })
 
@@ -192,7 +196,7 @@ buscarSecciones()
         .then(async (data)=> {
                  
                   cuerpo.innerHTML = "";
-                 
+                  document.body.appendChild(headerBooks)
                   const back = document.createElement("button");
                   const todas = document.createElement('section');
                   for(let i=0;i<data.length;i++){
