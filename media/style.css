@@ -52,15 +52,24 @@ main{
 }
 
 .favoritos{
-    margin-top: 10px;
     text-align: center;
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin: 10px;
+
 }
 
 .tarjetas{
   
     border: 1px solid rgb(14, 13, 13);
-    background-color: rgb(208, 255, 239);
-    border-radius: 3px;
+    background-color: rgb(208, 228, 255);
+    border-radius: 15px;
     min-height: 150px;
     min-width: 170px;
     margin: 5px;
@@ -146,6 +155,7 @@ main{
     padding: 4px;
     border-radius: 2px;
     box-shadow: 1px 1px 1px 1px grey;
+    margin: 10px;
 }
 
 footer{
@@ -154,6 +164,18 @@ footer{
     position: fixed;
     margin-bottom: 10px;
     display: flex;
+}
+
+.titulosFavs{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.titleFavs{
+    text-decoration: underline;
+    text-align: center;
+    margin: 5%;
+
 }
 
 

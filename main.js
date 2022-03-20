@@ -14,9 +14,10 @@ let firebaseConfig = {
   //limpiar el localstorage
   localStorage.clear();
 
-  //Variables globales2
+  //Variables globales
   let libro = "";
-  let librosGuardados = {}; //declaramos array para titulos de libros favoritos
+  const headerBooks = document.getElementById("headerbooks")
+  const footerBooks = document.getElementById("footerbooks")
 
 
   //inciar sesion con google
@@ -68,34 +69,49 @@ guardarFavs()
 
  //funcion para ver la pagina de favoritos
    function viewFavs(){
-//   async function verFavs(){
-//     cuerpo.innerHTML = "";
+  async function verFavs(){
+    cuerpo.innerHTML = "";
+    document.body.appendChild(headerBooks)
+    let librosFavoritos = []
+  db.collection("favoritos")
+    .get()
+    .then(async function (querySnapshot) {
+      querySnapshot.forEach(async function (doc) {
+        librosFavoritos.push(doc.data().titulo);
+    
+      });
+    })
+    .then(() => {
+      const back = document.createElement("button");
+      back.classList.add('volver')
+      back.innerHTML = "< BACK TO INDEX"
+      back.type = "onclick";
+      back.onclick = function volverAtras(){
+            goToCategories()
+         }
+      document.body.appendChild(back)
+      const title = document.createElement("h1");
+      title.classList.add("titleFavs")
+      title.innerHTML = "Saved favorite books"
+      document.body.appendChild(title)
+      console.log(librosFavoritos)
+      console.log(librosFavoritos.length)
+      for(let i=0;i<librosFavoritos.length;i++){
+        if(librosFavoritos[i]==""){
 
-//   db.collection("favoritos")
-//     .get()
-//     .then(async function (querySnapshot) {
-//       querySnapshot.forEach(async function (doc) {
-//         librosGuardados.add(doc.data().titulo);
-//       });
-//     })
-//   }
-  
-//   verFavs()
-//   .then(data => {
-//       console.log(librosGuardados)
-//       let librosarray = Object.values(librosGuardados[0])
-//       console.log(librosarray)
-//       console.log(librosGuardados.length)
-//     for(let i=0;i<librosGuardados.length;i++){
-//       console.log("pruebandckjsdkjc")
-//       const e = document.createElement('p');
-//       e.innerHTML = librosGuardados[i]
-//       cuerpo.appendChild(e)
-//       console.log(data)
-//     }
-//     console.log(data)
-//   })
+        } else {
+          const favs = document.createElement('p');
+          favs.classList.add("titulosFavs")
+          favs.innerHTML = `Title: ${librosFavoritos[i]}`
+          document.body.appendChild(favs)
+        }
+        
+      }
+
+    })
   }
+  verFavs()
+}
 
 //funcion para buscar las categorias de libros
 function goToCategories(){
@@ -117,6 +133,7 @@ buscarSecciones()
         favorites.innerHTML = `View favorites`
         let categoria = "";
         cuerpo.innerHTML = "";
+        document.body.appendChild(headerBooks)
         if(localStorage.getItem("usuario")){
         document.body.appendChild(favorites)
          favorites.onclick = async function goToFavs(){
@@ -154,8 +171,8 @@ buscarSecciones()
         div.appendChild(par2);
         div.appendChild(par3);
         div.appendChild(button);
-
     }   
+        
     
 })
 
@@ -179,7 +196,7 @@ buscarSecciones()
         .then(async (data)=> {
                  
                   cuerpo.innerHTML = "";
-                 
+                  document.body.appendChild(headerBooks)
                   const back = document.createElement("button");
                   const todas = document.createElement('section');
                   for(let i=0;i<data.length;i++){
