@@ -14,34 +14,32 @@ let firebaseConfig = {
   //limpiar el localstorage
   localStorage.clear();
 
-  //incializo variable global
+  //Variables globales2
   let libro = "";
-  let libro1 = "";
+  let librosGuardados = {}; //declaramos array para titulos de libros favoritos
+
 
   //inciar sesion con google
   const loginWithGoogle = function () {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        /** @type {firebase.auth.OAuthCredential} */
-        const user = result.user.displayName;
-        localStorage.setItem("usuario", user);
-        console.log("login con google de ", user);
-        goToCategories();
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = error.credential;
-        console.log(errorMessage);
-      });
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          /** @type {firebase.auth.OAuthCredential} */
+          const user = result.user.displayName;
+          localStorage.setItem("usuario", user);
+          console.log("login con google de ", user);
+          goToCategories();
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          const email = error.email;
+          const credential = error.credential;
+          console.log(errorMessage);
+        });
   };
-
-
-
 
 let direccion = "";
 let cuerpo = document.getElementById("indexbody");
@@ -68,13 +66,36 @@ function addFavs(){
 guardarFavs()
 }
 
-//funcion para ver la pagina de favoritos
-// function goToFavs(){
-//   async function viewFavs(){
+ //funcion para ver la pagina de favoritos
+   function viewFavs(){
+//   async function verFavs(){
 //     cuerpo.innerHTML = "";
 
+//   db.collection("favoritos")
+//     .get()
+//     .then(async function (querySnapshot) {
+//       querySnapshot.forEach(async function (doc) {
+//         librosGuardados.add(doc.data().titulo);
+//       });
+//     })
 //   }
-// }
+  
+//   verFavs()
+//   .then(data => {
+//       console.log(librosGuardados)
+//       let librosarray = Object.values(librosGuardados[0])
+//       console.log(librosarray)
+//       console.log(librosGuardados.length)
+//     for(let i=0;i<librosGuardados.length;i++){
+//       console.log("pruebandckjsdkjc")
+//       const e = document.createElement('p');
+//       e.innerHTML = librosGuardados[i]
+//       cuerpo.appendChild(e)
+//       console.log(data)
+//     }
+//     console.log(data)
+//   })
+  }
 
 //funcion para buscar las categorias de libros
 function goToCategories(){
@@ -98,9 +119,9 @@ buscarSecciones()
         cuerpo.innerHTML = "";
         if(localStorage.getItem("usuario")){
         document.body.appendChild(favorites)
-        // favorites.onclick = async function goToFavs(){
-        //   viewFavs();
-        // }
+         favorites.onclick = async function goToFavs(){
+           viewFavs();
+         }
         }
        for(let i=0;i<data.length;i++){
        
@@ -126,7 +147,6 @@ buscarSecciones()
         par2.innerHTML = `Newest: ${data[i].newest_published_date}`
         par3.innerHTML =  `Updated: ${data[i].updated}` 
         button.innerHTML = `READ MORE! >`
-       // fav.innerHTML = `Favorito`
         document.body.appendChild(todas)
         todas.appendChild(div)
         div.appendChild(e);
@@ -134,7 +154,6 @@ buscarSecciones()
         div.appendChild(par2);
         div.appendChild(par3);
         div.appendChild(button);
-       // div.appendChild(fav);
 
     }   
     
@@ -143,7 +162,7 @@ buscarSecciones()
 }
 
 
-     //funcion para buscar los best sellers
+     //funcion para buscar los libros best sellers
      function iraBests(){
        async function buscarBestSellers() {
             try {
@@ -178,7 +197,6 @@ buscarSecciones()
                    button2.classList.add('amazon')
                    back.type = "onclick";
                    back.onclick = function volverAtras(){
-                    //window.location="/index.html"
                        goToCategories()
                    }
                    button2.type = "onclick";
